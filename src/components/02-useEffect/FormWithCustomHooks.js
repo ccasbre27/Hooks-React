@@ -1,38 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useForm } from '../hooks/useForm';
 import './effects.css';
-import { Message } from './Message';
 
-export const SimpleForm = () => {
+export const FormWithCustomHook = () => {
 
-    const [formState, setFormState] = useState({
+    const [formValues, handleInputChange] = useForm({
         name: '',
-        email: ''
+        email: '',
+        password: ''
     });
 
-    const { name, email } = formState;
+    const { name, email, password } = formValues;
 
-    useEffect( () => {
-        console.log('hey');
-    }, []);
-
-    useEffect( () => {
-        console.log('formState cambió');
-    }, [formState]);
-
-    useEffect( () => {
-        console.log('email cambió');
-    }, [email]);
-
-    const handleInputChange = ({ target }) => {
-        console.log(target.value);
-        setFormState({
-            ...formState,
-            [ target.name ]: target.value
-        });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formValues);
     }
 
     return (
-        <div>
+        <form onSubmit={ handleSubmit }>
             <h1>useEffect</h1>
             <hr />
             <div className="form-group">
@@ -57,8 +43,20 @@ export const SimpleForm = () => {
                     onChange={ handleInputChange } />
             </div>
 
-            { (name === '123') && <Message /> }
+            <div className="form-group">
+                <input
+                    type="password"
+                    name="password"
+                    className="form-control"
+                    placeholder="*****"
+                    value={ password }
+                    onChange={ handleInputChange } />
+            </div>
 
-        </div>
+            <button type="submit" className="btn btn-primary">
+                Save
+            </button>
+
+        </form>
     )
 }
