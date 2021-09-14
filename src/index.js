@@ -12,10 +12,11 @@ import { CallbackHook } from './components/06-memos/CallbackHook';
 import { MemoHook } from './components/06-memos/MemoHook';
 import { Memorize } from './components/06-memos/Memorize';
 import { Vater } from './components/07-tarea-memo/Vater';
+import { TODOApp } from './components/08-useReducer/TODOApp';
 // import App from './App';
 
 ReactDOM.render(
-  <Vater />,
+  <TODOApp />,
   document.getElementById('root')
 );
 
