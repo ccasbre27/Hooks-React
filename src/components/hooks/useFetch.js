@@ -2,12 +2,12 @@ import { useEffect, useState, useRef } from "react";
 
 export const useFetch = ( url ) => {
     
-    const isMounterd = useRef(true);
+    const isMounted = useRef(true);
     const [state, setState] = useState({ data: null, loading: true, error: null });
 
     useEffect(() => {
         return () => {
-            isMounterd.current = false;
+            isMounted.current = false;
         }
     }, [])
 
@@ -23,7 +23,7 @@ export const useFetch = ( url ) => {
             .then( resp => resp.json() )
             .then( data => {
 
-                if ( !isMounterd.current ) {
+                if ( isMounted.current ) {
                     setState({
                         loading: false,
                         error: null,
@@ -31,6 +31,15 @@ export const useFetch = ( url ) => {
                     });
                 }
             })
+            .catch( () => {
+
+                setState({
+                    loading: false,
+                    error: 'Could not load info',
+                    data: null
+                });
+
+            });
         
     }, [url])
 
